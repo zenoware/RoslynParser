@@ -2686,9 +2686,9 @@ namespace CSMS.CSMSSDK.Roslyn
             //Returns
             List<ReturnStatementSyntax> returns = new List<ReturnStatementSyntax>();
 
-            MethodBlockSyntax mbs = css.Parent as MethodBlockSyntax;
+            //MethodBlockSyntax mbs = css.Parent as MethodBlockSyntax;
 
-            foreach (SyntaxNode sn in mbs.Statements)
+            foreach (SyntaxNode sn in css.Statements)
             {
                 if (sn is MultiLineIfBlockSyntax)
                 {
