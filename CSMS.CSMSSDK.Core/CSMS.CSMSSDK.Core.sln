@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMS.CSMSSDK.Model", "CSMS.CMSSDK.Model\CSMS.CSMSSDK.Model.csproj", "{28A8AD45-27BC-4601-9F01-26F5C14B0453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMS.CSMSSDK.Roslyn", "CSMS.CSMSSDK.Roslyn\CSMS.CSMSSDK.Roslyn.csproj", "{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://zenoware.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CSMS.CMSSDK.Model\\CSMS.CSMSSDK.Model.csproj
+		SccProjectName1 = CSMS.CMSSDK.Model
+		SccLocalPath1 = CSMS.CMSSDK.Model
+		SccProjectUniqueName2 = CSMS.CSMSSDK.Roslyn\\CSMS.CSMSSDK.Roslyn.csproj
+		SccProjectName2 = CSMS.CSMSSDK.Roslyn
+		SccLocalPath2 = CSMS.CSMSSDK.Roslyn
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Debug|x64.ActiveCfg = Debug|x64
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Debug|x64.Build.0 = Debug|x64
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Debug|x86.ActiveCfg = Debug|x86
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Debug|x86.Build.0 = Debug|x86
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Release|x64.ActiveCfg = Release|x64
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Release|x64.Build.0 = Release|x64
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Release|x86.ActiveCfg = Release|x86
+		{28A8AD45-27BC-4601-9F01-26F5C14B0453}.Release|x86.Build.0 = Release|x86
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Release|x64.ActiveCfg = Release|Any CPU
+		{92880B0D-B65A-4A48-995F-61F0CCFA5CF2}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
