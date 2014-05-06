@@ -20,6 +20,16 @@ namespace CSMS.CSMSSDK.Model
    public abstract class Base
     {
         /// <summary>
+        ///Comments in the code
+        /// </summary>
+        public string InnerComment { get; set; }
+
+        // <summary>
+        /// Comments outside a class, namespace, etc.
+        /// </summary>
+        public string OuterComment { get; set; }
+
+        /// <summary>
         /// The starting Line Number
         /// </summary>
         public int StartLn { get; set; }
