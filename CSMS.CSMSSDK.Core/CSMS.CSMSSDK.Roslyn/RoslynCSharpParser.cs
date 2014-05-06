@@ -45,7 +45,6 @@ namespace CSMS.CSMSSDK.Roslyn
         public Namespace TraverseTree()
         {
             Namespace retNS = new Namespace();
-
             //Get using statements first
             List<UsingList> usingList = TraverseUsingList();
             retNS.UsingList = usingList;
@@ -136,6 +135,16 @@ namespace CSMS.CSMSSDK.Roslyn
 
             retNS.Name = nds.Name.ToString();
 
+            if (nds.HasLeadingTrivia)
+            {
+                SetOuterComments(retNS, nds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (nds.HasTrailingTrivia)
+            {
+                SetInnerComments(retNS, nds.GetTrailingTrivia().ToFullString());
+            }
+
             //First, grab any objects defined at the beginning of the namespace (even delegates!)
             var delegates = from aDelegate in nds.ChildNodes().OfType<DelegateDeclarationSyntax>() select aDelegate;
             foreach (DelegateDeclarationSyntax dds in delegates)
@@ -196,6 +205,15 @@ namespace CSMS.CSMSSDK.Roslyn
             {
                 UsingList ul = new UsingList();
                 ul.LibName = uds.Name.ToString();
+                if (uds.HasLeadingTrivia)
+                {
+                    SetOuterComments(ul, uds.GetLeadingTrivia().ToFullString());
+                }
+
+                if (uds.HasTrailingTrivia)
+                {
+                    SetInnerComments(ul, uds.GetTrailingTrivia().ToFullString());
+                }
                 ul.Identifier = ""; //??
             }
 
@@ -213,6 +231,15 @@ namespace CSMS.CSMSSDK.Roslyn
         //public List<Property> Properties { get; set; }
         //public List<Union> Unions { get; set; }
             retClass.Name = cds.Identifier.ValueText;
+            if (cds.HasLeadingTrivia)
+            {
+                SetOuterComments(retClass, cds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (cds.HasTrailingTrivia)
+            {
+                SetInnerComments(retClass, cds.GetTrailingTrivia().ToFullString());
+            }
             foreach (SyntaxToken st in cds.Modifiers)
             {
                 string modifier = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(st.ValueText);
@@ -289,6 +316,16 @@ namespace CSMS.CSMSSDK.Roslyn
             //public string Name { get; set; }
             //public Type Type { get; set; }
 
+            if (eds.HasLeadingTrivia)
+            {
+                SetOuterComments(retEnu, eds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (eds.HasTrailingTrivia)
+            {
+                SetInnerComments(retEnu, eds.GetTrailingTrivia().ToFullString());
+            }
+
             var types = from aType in eds.ChildNodes().OfType<TypeDeclarationSyntax>() select aType;
             foreach (TypeDeclarationSyntax tds in types)
             {
@@ -323,6 +360,16 @@ namespace CSMS.CSMSSDK.Roslyn
             //public List<Property> Properties { get; set; }
             //public List<Union> Unions { get; set; }
             retStruct.Name = sds.Identifier.ValueText;
+            if (sds.HasLeadingTrivia)
+            {
+                SetOuterComments(retStruct, sds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (sds.HasTrailingTrivia)
+            {
+                SetInnerComments(retStruct, sds.GetTrailingTrivia().ToFullString());
+            }
+
             foreach (SyntaxToken st in sds.Modifiers)
             {
                 string modifier = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(st.ValueText);
@@ -474,6 +521,16 @@ namespace CSMS.CSMSSDK.Roslyn
             //public bool IsStatic { get; }
             //public List<Preprocessor> Preprocessors { get; set; }
             retMethod.Name = mds.Identifier.ValueText;
+
+            if (mds.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, mds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (mds.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, mds.GetTrailingTrivia().ToFullString());
+            }
 
             foreach (SyntaxToken st in mds.Modifiers)
             {
@@ -802,6 +859,15 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             IfStatement ifStm = new IfStatement();
+            if (iss.HasLeadingTrivia)
+            {
+                SetOuterComments(ifStm, iss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (iss.HasTrailingTrivia)
+            {
+                SetInnerComments(ifStm, iss.GetTrailingTrivia().ToFullString());
+            }
             ifStm.IsNested = nested;
             //public int ExpressionListEndLn { get; set; }
             //public int ExpressionListStartLn { get; set; }
@@ -973,6 +1039,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             CatchStatements retCatch = new CatchStatements();
+
+            if (ccs.HasLeadingTrivia)
+            {
+                SetOuterComments(retCatch, ccs.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ccs.HasTrailingTrivia)
+            {
+                SetInnerComments(retCatch, ccs.GetTrailingTrivia().ToFullString());
+            }
+
             retCatch.IsNested = nested;
             var binaryExpressions = from aBinaryExpression in ccs.ChildNodes().OfType<BinaryExpressionSyntax>() select aBinaryExpression;
             foreach (BinaryExpressionSyntax bes in binaryExpressions)
@@ -1130,6 +1207,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Method TraverseExpressionStatementSyntax(ExpressionStatementSyntax ess)
         {
             Method retMethod = new Method();
+
+            if (ess.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, ess.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ess.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, ess.GetTrailingTrivia().ToFullString());
+            }
+
             var vars = from aVar in ess.ChildNodes().OfType<BinaryExpressionSyntax>() select aVar;
             foreach (BinaryExpressionSyntax bes in vars)
             {
@@ -1164,6 +1252,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Method TraversePrefixUnaryExpressions(PrefixUnaryExpressionSyntax pues)
         {
             Method retMethod = new Method();
+
+            if (pues.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, pues.GetLeadingTrivia().ToFullString());
+            }
+
+            if (pues.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, pues.GetTrailingTrivia().ToFullString());
+            }
+
             var vars = from aVar in pues.ChildNodes().OfType<IdentifierNameSyntax>() select aVar;
             foreach (IdentifierNameSyntax ins in vars)
             {
@@ -1177,6 +1276,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Method TraversePostfixUnaryExpressions(PostfixUnaryExpressionSyntax pues)
         {
             Method retMethod = new Method();
+
+            if (pues.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, pues.GetLeadingTrivia().ToFullString());
+            }
+
+            if (pues.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, pues.GetTrailingTrivia().ToFullString());
+            }
+
             var vars = from aVar in pues.ChildNodes().OfType<IdentifierNameSyntax>() select aVar;
             foreach (IdentifierNameSyntax ins in vars)
             {
@@ -1191,6 +1301,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             ElseStatement elseStm = new ElseStatement();
+
+            if (ecs.HasLeadingTrivia)
+            {
+                SetOuterComments(elseStm, ecs.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ecs.HasTrailingTrivia)
+            {
+                SetInnerComments(elseStm, ecs.GetTrailingTrivia().ToFullString());
+            }
+
             elseStm.IsNested = nested;
             var binaryExpressions = from aBinaryExpression in ecs.ChildNodes().OfType<BinaryExpressionSyntax>() select aBinaryExpression;
             foreach (BinaryExpressionSyntax bes in binaryExpressions)
@@ -1284,6 +1405,16 @@ namespace CSMS.CSMSSDK.Roslyn
             //get method name and accessed variables
             //and attributes and qualifiers
             Method retIm = new Method();
+
+            if (ies.HasLeadingTrivia)
+            {
+                SetOuterComments(retIm, ies.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ies.HasTrailingTrivia)
+            {
+                SetInnerComments(retIm, ies.GetTrailingTrivia().ToFullString());
+            }
             //havent tested this with extra stuff like setting the variable equal to the method call
             //or with variables in the method call
             var methods = from aMethod in ies.ChildNodes().OfType<IdentifierNameSyntax>() select aMethod;
@@ -1316,6 +1447,17 @@ namespace CSMS.CSMSSDK.Roslyn
             //get accessed vars, invoked methods, nested
             Decisions retDecision = new Decisions();
             WhileLoop whileStm = new WhileLoop();
+
+            if (wss.HasLeadingTrivia)
+            {
+                SetOuterComments(whileStm, wss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (wss.HasTrailingTrivia)
+            {
+                SetInnerComments(whileStm, wss.GetTrailingTrivia().ToFullString());
+            }
+
             ExpressionSyntax es = wss.Condition;
             //var binaryExpressions = from aBinaryExpression in wss.Condition.DescendantNodesAndSelf().OfType<BinaryExpressionSyntax>() select aBinaryExpression;
             var binaryExpressions = from abinaryExpression in wss.ChildNodes().OfType<BinaryExpressionSyntax>() select abinaryExpression;
@@ -1455,6 +1597,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             SwitchStatement retSwitch = new SwitchStatement();
+
+            if (sss.HasLeadingTrivia)
+            {
+                SetOuterComments(retSwitch, sss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (sss.HasTrailingTrivia)
+            {
+                SetInnerComments(retSwitch, sss.GetTrailingTrivia().ToFullString());
+            }
+
             ExpressionSyntax es = sss.Expression;
             var binaryExprs = from aBinaryExpr in sss.ChildNodes().OfType<BinaryExpressionSyntax>() select aBinaryExpr;
             foreach (BinaryExpressionSyntax bes in binaryExprs)
@@ -1598,6 +1751,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             ForStatement retFor = new ForStatement();
+
+            if (fss.HasLeadingTrivia)
+            {
+                SetOuterComments(retFor, fss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (fss.HasTrailingTrivia)
+            {
+                SetInnerComments(retFor, fss.GetTrailingTrivia().ToFullString());
+            }
+
             ExpressionSyntax es = fss.Condition;
             if (es != null)
             {
@@ -1734,6 +1898,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             ForEachStatement retForEach = new ForEachStatement();
+
+            if (fes.HasLeadingTrivia)
+            {
+                SetOuterComments(retForEach, fes.GetLeadingTrivia().ToFullString());
+            }
+
+            if (fes.HasTrailingTrivia)
+            {
+                SetInnerComments(retForEach, fes.GetTrailingTrivia().ToFullString());
+            }
+
             var binaryExpressions = from aBinaryExpression in fes.ChildNodes().OfType<BinaryExpressionSyntax>() select aBinaryExpression;
             retForEach.ConditionCount = binaryExpressions.Count();
             foreach (BinaryExpressionSyntax bes in binaryExpressions)
@@ -1877,6 +2052,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Decisions retDecision = new Decisions();
             DoWhileLoop retDo = new DoWhileLoop();
+
+            if (dss.HasLeadingTrivia)
+            {
+                SetOuterComments(retDo, dss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (dss.HasTrailingTrivia)
+            {
+                SetInnerComments(retDo, dss.GetTrailingTrivia().ToFullString());
+            }
+
             ExpressionSyntax es = dss.Condition;
             var binaryExpressions = from aBinaryExpression in dss.Condition.DescendantNodesAndSelf().OfType<BinaryExpressionSyntax>() select aBinaryExpression;
             retDo.ConditionCount = binaryExpressions.Count();
@@ -2010,6 +2196,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             var variables = from aVariable in bes.ChildNodes().OfType<IdentifierNameSyntax>() select aVariable;
             Method retMethod = new Method();
+
+            if (bes.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, bes.GetLeadingTrivia().ToFullString());
+            }
+
+            if (bes.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, bes.GetTrailingTrivia().ToFullString());
+            }
+
             //Casting on the back end....ex:
             // abc = def as double ------- def as double is the binary expression
             if (bes.OperatorToken.IsKind(SyntaxKind.AsKeyword))
@@ -2079,6 +2276,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Method TraverseCastExpressions(CastExpressionSyntax ces)
         {
             Method retMethod = new Method();
+
+            if (ces.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, ces.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ces.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, ces.GetTrailingTrivia().ToFullString());
+            }
+
             var variables = from aVariable in ces.ChildNodes().OfType<IdentifierNameSyntax>() select aVariable;
             Model.Type type = new Model.Type();
             type.Name = ces.Type.ToString();
@@ -2120,6 +2328,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Method TransverseAccessVars(LocalDeclarationStatementSyntax ldss)
         {
             Method retMethod = new Method();
+
+            if (ldss.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, ldss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ldss.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, ldss.GetTrailingTrivia().ToFullString());
+            }
+
             List<Encapsulation> accessability = new List<Encapsulation>();
             List<Qualifiers> qualifiers = new List<Qualifiers>();
             foreach (SyntaxToken st in ldss.Modifiers)
@@ -2175,6 +2394,17 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             Method retMethod = new Method();
             Variables retVar = new Variables();
+
+            if (vds.HasLeadingTrivia)
+            {
+                SetOuterComments(retVar, vds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (vds.HasTrailingTrivia)
+            {
+                SetInnerComments(retVar, vds.GetTrailingTrivia().ToFullString());
+            }
+
             retVar.Name = vds.Identifier.ValueText;
             Model.Type retType = new Model.Type();
             retType.IsKnownType = SyntaxFacts.IsKeywordKind(vds.CSharpKind());
@@ -2195,6 +2425,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Method TraverseEqualsClause(EqualsValueClauseSyntax evcs)
         {
             Method retMethod = new Method();
+
+            if (evcs.HasLeadingTrivia)
+            {
+                SetOuterComments(retMethod, evcs.GetLeadingTrivia().ToFullString());
+            }
+
+            if (evcs.HasTrailingTrivia)
+            {
+                SetInnerComments(retMethod, evcs.GetTrailingTrivia().ToFullString());
+            }
+
             var binaryExprs = from aBinaryExpr in evcs.ChildNodes().OfType<BinaryExpressionSyntax>() select aBinaryExpr;
             foreach(BinaryExpressionSyntax bes in binaryExprs)
             {
@@ -2216,6 +2457,16 @@ namespace CSMS.CSMSSDK.Roslyn
         {
             GoTo retGoTo = new GoTo();
 
+            if (gtss.HasLeadingTrivia)
+            {
+                SetOuterComments(retGoTo, gtss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (gtss.HasTrailingTrivia)
+            {
+                SetInnerComments(retGoTo, gtss.GetTrailingTrivia().ToFullString());
+            }
+
             var labelStatements = from aLabelStatement in gtss.ChildNodes().OfType<LabeledStatementSyntax>() select aLabelStatement;
 
             foreach (LabeledStatementSyntax lss in labelStatements)
@@ -2229,6 +2480,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private LabelStatement TraverseLabelStatements(LabeledStatementSyntax lss)
         {
             LabelStatement retLabelStatement = new LabelStatement();
+
+            if (lss.HasLeadingTrivia)
+            {
+                SetOuterComments(retLabelStatement, lss.GetLeadingTrivia().ToFullString());
+            }
+
+            if (lss.HasTrailingTrivia)
+            {
+                SetInnerComments(retLabelStatement, lss.GetTrailingTrivia().ToFullString());
+            }
+
             retLabelStatement.Name = lss.Identifier.ValueText;
             return retLabelStatement;
         }
@@ -2236,6 +2498,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Variables TraverseParamaters(ParameterSyntax ps, bool isRef = false)
         {
             Variables retVar = new Variables();
+
+            if (ps.HasLeadingTrivia)
+            {
+                SetOuterComments(retVar, ps.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ps.HasTrailingTrivia)
+            {
+                SetInnerComments(retVar, ps.GetTrailingTrivia().ToFullString());
+            }
+
             retVar.IsReferenced = isRef;
             TypeSyntax ts = ps.Type;
             //Breakpoint here to test return type!
@@ -2273,6 +2546,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Variables TransverseVariables(FieldDeclarationSyntax fds, bool isRef = false)
         {
             Variables retVar = new Variables();
+
+            if (fds.HasLeadingTrivia)
+            {
+                SetOuterComments(retVar, fds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (fds.HasTrailingTrivia)
+            {
+                SetInnerComments(retVar, fds.GetTrailingTrivia().ToFullString());
+            }
+
             retVar.IsReferenced = isRef;
             //Not sure if right
             retVar.Type.IsKnownType = SyntaxFacts.IsKeywordKind(fds.CSharpKind());
@@ -2311,6 +2595,16 @@ namespace CSMS.CSMSSDK.Roslyn
             //public bool IsStatic { get; }
             //public List<Preprocessor> Preprocessors { get; set; }
             retConstructor.Name = cds.Identifier.ValueText;
+
+            if (cds.HasLeadingTrivia)
+            {
+                SetOuterComments(retConstructor, cds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (cds.HasTrailingTrivia)
+            {
+                SetInnerComments(retConstructor, cds.GetTrailingTrivia().ToFullString());
+            }
 
             foreach (SyntaxToken st in cds.Modifiers)
             {
@@ -2589,6 +2883,16 @@ namespace CSMS.CSMSSDK.Roslyn
             //public List<Preprocessor> Preprocessors { get; set; }
             retDestructor.Name = dds.Identifier.ValueText;
 
+            if (dds.HasLeadingTrivia)
+            {
+                SetOuterComments(retDestructor, dds.GetLeadingTrivia().ToFullString());
+            }
+
+            if (dds.HasTrailingTrivia)
+            {
+                SetInnerComments(retDestructor, dds.GetTrailingTrivia().ToFullString());
+            }
+
             foreach (SyntaxToken st in dds.Modifiers)
             {
                 string modifier = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(st.ValueText);
@@ -2857,6 +3161,17 @@ namespace CSMS.CSMSSDK.Roslyn
         private Interface TraverseInterface(InterfaceDeclarationSyntax ids)
         {
             Interface retInterface = new Interface();
+
+            if (ids.HasLeadingTrivia)
+            {
+                SetOuterComments(retInterface, ids.GetLeadingTrivia().ToFullString());
+            }
+
+            if (ids.HasTrailingTrivia)
+            {
+                SetInnerComments(retInterface, ids.GetTrailingTrivia().ToFullString());
+            }
+
             foreach (SyntaxToken st in ids.Modifiers)
             {
                 string modifier = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(st.ValueText);
@@ -2895,6 +3210,22 @@ namespace CSMS.CSMSSDK.Roslyn
             //public List<string> InheritsStrings { get; set; }
             //public List<Property> Properties { get; set; }
             return retInterface;
+        }
+
+        private void SetOuterComments(Base baseObject, string comment)
+        {
+            if (!String.IsNullOrWhiteSpace(comment) && comment != Environment.NewLine)
+            {
+                baseObject.OuterComment = baseObject.OuterComment == null ? comment : baseObject + comment;
+            }
+        }
+
+        private void SetInnerComments(Base baseObject, string comment)
+        {
+            if (!String.IsNullOrWhiteSpace(comment) && comment != Environment.NewLine)
+            {
+                baseObject.InnerComment = baseObject.InnerComment == null ? comment : baseObject + comment;
+            }
         }
     }
 }
